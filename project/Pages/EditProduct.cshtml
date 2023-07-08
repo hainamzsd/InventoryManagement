@@ -1,0 +1,85 @@
+﻿@page
+@model project.Pages.EditProductModel
+@{
+}
+<button type="button" class="btn btn-primary" onclick="goBack()">Go Back</button>
+
+<h1>
+    Product Detail
+</h1>
+
+<form method="post" asp-page-handler="EditProduct" >
+      <input type="hidden" asp-for="product.ProductId" />
+    <div class="form-group">
+        <label asp-for="product.ProductName">Product Name</label>
+        <input
+             asp-for="product.ProductName"
+             type="text" class="form-control" >
+    </div>
+    <div class="form-group">
+    <label asp-for="product.SupplierId">Supplier ID</label>
+    <select asp-for="product.SupplierId" class="form-control">
+        <option value="">-- Select Supplier --</option>
+        @foreach (var supplier in Model.supplier)
+        {
+            <option value="@supplier.SupplierId">@supplier.CompanyName</option>
+        }
+    </select>
+</div>
+<div class="form-group">
+    <label asp-for="product.CategoryId">Category ID</label>
+    <select asp-for="product.CategoryId" class="form-control">
+        <option value="">-- Select Category --</option>
+        @foreach (var category in Model.category)
+        {
+            <option value="@category.CategoryId">@category.CategoryName</option>
+        }
+    </select>
+</div>
+    <div class="form-group">
+        <label asp-for="product.QuantityPerUnit">Quantity Per Unit</label>
+        <input
+            asp-for="product.QuantityPerUnit"
+            type="text" class="form-control" id="quantityPerUnit" >
+    </div>
+    <div class="form-group">
+        <label asp-for="product.UnitPrice">Unit Price</label>
+        <input asp-for="product.UnitPrice"
+        type="number" class="form-control" id="unitPrice">
+    </div>
+    <div class="form-group">
+        <label asp-for="product.UnitsInStock">Units In Stock</label>
+        <input
+            asp-for="product.UnitsInStock"
+            type="number" class="form-control" id="unitsInStock">
+    </div>
+    <div class="form-group">
+        <label asp-for="product.UnitsOnOrder">Units On Order</label>
+        <input 
+            asp-for="product.UnitsOnOrder"
+            type="number" class="form-control" id="unitsOnOrder" >
+    </div>
+    <div class="form-group">
+        <label asp-for="product.ReorderLevel">Reorder Level</label>
+        <input 
+            asp-for="product.ReorderLevel"
+            type="number" class="form-control" id="reorderLevel" >
+    </div>
+    <div class="form-group">
+        <div class="form-check">
+            <input 
+                asp-for="product.Discontinued"
+                class="form-check-input" type="checkbox" id="discontinued" >
+            <label class="form-check-label" asp-for="product.Discontinued">
+                Discontinued
+            </label>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>

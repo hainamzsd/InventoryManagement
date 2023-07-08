@@ -27,13 +27,10 @@
                     <td>@product.UnitsOnOrder</td>
                     <td>@product.UnitPrice</td>
                     <td>
+                        <div>
                   <a asp-page="/EditProduct" asp-route-productId="@product.ProductId" class="btn btn-primary">Edit</a>
-                <form method="post" asp-page-handler="DeleteProduct" 
-                asp-route-productId="@product.ProductId" 
-                onsubmit="confirmDelete()"
-                id="deleteForm_@product.ProductId">
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
+                 <a asp-page-handler="DeleteProduct" asp-route-productId="@product.ProductId" class="btn btn-danger">Delete</a>
+                </div>
             </td>
                 </tr>
             }
