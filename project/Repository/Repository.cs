@@ -3,15 +3,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using project.Models;
+
 namespace project.Repository;
 
 
 public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
 {
-    private readonly DbContext _context;
+    private readonly NorthwindContext _context;
     private readonly DbSet<TEntity> _dbSet;
 
-    public Repository(DbContext context)
+    public Repository(NorthwindContext context)
     {
         _context = context;
         _dbSet = context.Set<TEntity>();

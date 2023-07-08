@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using project.Business;
 using project.Models;
+using project.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +15,9 @@ builder.Services.AddDbContext<NorthwindContext>(options =>
 {
     options.UseSqlServer(connectionString);
 });
+
+builder.Services.AddTransient<IRepository<Product>, Repository<Product>>();
+builder.Services.AddTransient<ProductManager>();
 
 builder.Services.AddSession(options =>
 {
