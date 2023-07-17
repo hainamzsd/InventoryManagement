@@ -19,9 +19,11 @@ builder.Services.AddDbContext<NorthwindContext>(options =>
 builder.Services.AddTransient<IRepository<Product>, Repository<Product>>();
 builder.Services.AddTransient<IRepository<Category>, Repository<Category>>();
 builder.Services.AddTransient<IRepository<Supplier>, Repository<Supplier>>();
+builder.Services.AddTransient<IRepository<Order>, Repository<Order>>();
 builder.Services.AddTransient<ProductManager>();
 builder.Services.AddTransient<CategoryManager>();
 builder.Services.AddTransient<SupplierManager>();
+builder.Services.AddTransient<OrderManager>();
 
 builder.Services.AddSession(options =>
 {

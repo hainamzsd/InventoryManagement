@@ -1,0 +1,115 @@
+﻿@page
+@model project.Pages.OrderListModel
+@{
+}
+<h1>Order List</h1>
+
+<form method="get">
+    <div class="form-inline">
+        <input type="text" class="form-control" placeholder="Search by name" name="name">
+        <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Customer ID</th>
+            <th>Employee ID</th>
+            <th>Order Date</th>
+            <th>Required Date</th>
+            <th>Shipped Date</th>
+            <th>Ship Via</th>
+            <th>Freight</th>
+            <th>Ship Name</th>
+            <th>Ship Address</th>
+            <th>Ship City</th>
+            <th>Ship Region</th>
+            <th>Ship Postal Code</th>
+            <th>Ship Country</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model.DisplayOrders)
+        {
+            <tr>
+                <td>@order.CustomerId</td>
+                <td>@order.EmployeeId</td>
+                <td>@order.OrderDate</td>
+                <td>@order.RequiredDate</td>
+                <td>@order.ShippedDate</td>
+                <td>@order.ShipVia</td>
+                <td>@order.Freight</td>
+                <td>@order.ShipName</td>
+                <td>@order.ShipAddress</td>
+                <td>@order.ShipCity</td>
+                <td>@order.ShipRegion</td>
+                <td>@order.ShipPostalCode</td>
+                <td>@order.ShipCountry</td>
+                <td>
+                    <div>
+                        <a class="btn btn-primary" asp-page="/EditOrder">Edit</a>
+                        <a class="btn btn-danger" asp-page-handler="DeleteOrder">Delete</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+ @if (Model.TotalPages > 1)
+{
+    <nav>
+        <ul class="pagination">
+            @if (Model.CurrentPage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-page-handler="GoToPage" asp-route-pageIndex="1">First</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" asp-page-handler="GoToPage" asp-route-pageIndex="@(Model.CurrentPage - 1)">Previous</a>
+                </li>
+            }
+            
+            @if (Model.CurrentPage > 10)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-page-handler="GoToPage" asp-route-pageIndex="1">1</a>
+                </li>
+                <li class="page-item disabled">
+                    <span class="page-link">...</span>
+                </li>
+            }
+            
+            @for (int i = Model.CurrentPage - 5; i <= Model.CurrentPage + 5; i++)
+            {
+                if (i > 0 && i <= Model.TotalPages)
+                {
+                    <li class="page-item @(Model.CurrentPage == i ? "active" : "")">
+                        <a class="page-link" asp-page-handler="GoToPage" asp-route-pageIndex="@i">@i</a>
+                    </li>
+                }
+            }
+            
+            @if (Model.CurrentPage < Model.TotalPages - 10)
+            {
+                <li class="page-item disabled">
+                    <span class="page-link">...</span>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" asp-page-handler="GoToPage" asp-route-pageIndex="@Model.TotalPages">@Model.TotalPages</a>
+                </li>
+            }
+            
+            @if (Model.CurrentPage < Model.TotalPages)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-page-handler="GoToPage" asp-route-pageIndex="@(Model.CurrentPage + 1)">Next</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" asp-page-handler="GoToPage" asp-route-pageIndex="@Model.TotalPages">Last</a>
+                </li>
+            }
+        </ul>
+    </nav>
+}

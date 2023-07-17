@@ -3,9 +3,6 @@
 @{
     ViewData["Title"] = "Home page";
 }
-@{
-    int totalPages = (int)Math.Ceiling((double)Model.TotalProducts / Model.ProductsPerPage);
-}
 <div class="container">
     <h1>Product List</h1>
     <a  class="btn btn-primary my-3" asp-page="/AddProduct">
@@ -23,7 +20,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var product in Model.Products)
+            @foreach (var product in Model.DisplayProducts)
             {
                 <tr>
                     <td>@product.ProductId</td>
@@ -41,14 +38,32 @@
             }
         </tbody>
     </table>
-    @if (totalPages > 1)
+   @if (Model.TotalPages > 1)
 {
     <nav>
         <ul class="pagination">
-            @for (int p = 1; p <= totalPages; p++)
+            @if (Model.CurrentPage > 1)
             {
-                <li class="page-item @(p == Model.CurrentPage ? "active" : "")">
-                    <a class="page-link" asp-page-handler="Page">@p</a>
+                <li class="page-item">
+                    <a class="page-link" asp-page-handler="GoToPage" asp-route-pageIndex="1">First</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" asp-page-handler="GoToPage" asp-route-pageIndex="@(Model.CurrentPage - 1)">Previous</a>
+                </li>
+            }
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                <li class="page-item @(Model.CurrentPage == i ? "active" : "")">
+                    <a class="page-link" asp-page-handler="GoToPage" asp-route-pageIndex="@i">@i</a>
+                </li>
+            }
+            @if (Model.CurrentPage < Model.TotalPages)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-page-handler="GoToPage" asp-route-pageIndex="@(Model.CurrentPage + 1)">Next</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" asp-page-handler="GoToPage" asp-route-pageIndex="@Model.TotalPages">Last</a>
                 </li>
             }
         </ul>
