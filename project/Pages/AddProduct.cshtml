@@ -1,5 +1,5 @@
 ﻿@page
-@model project.Pages.EditProductModel
+@model project.Pages.AddProductModel
 @{
 }
 <button type="button" class="btn btn-primary" onclick="goBack()">Go Back</button>
@@ -7,10 +7,18 @@
 <h1>
     Product Detail
 </h1>
+<div class="text-danger">
+    @Html.ValidationSummary()
+</div>
 
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["SuccessMessage"]
+    </div>
+}
 
-<form method="post" asp-page-handler="EditProduct" >
-      <input type="hidden" asp-for="product.ProductId" />
+<form method="post" asp-page-handler="AddProduct" >
     <div class="form-group">
         <label asp-for="product.ProductName">Product Name</label>
         <input

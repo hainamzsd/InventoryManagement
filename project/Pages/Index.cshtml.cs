@@ -15,6 +15,10 @@ namespace project.Pages
 
         private ProductManager _productManager;
 
+        public int CurrentPage { get; set; }
+        public int TotalProducts { get; set; }
+        public int ProductsPerPage { get; set; }
+
 
         public IndexModel(ProductManager productManager)
         {
@@ -28,12 +32,21 @@ namespace project.Pages
             {
                 return RedirectToPage("/Login");
             }
+            CurrentPage = 1;
+            ProductsPerPage = 10; 
+
             Products = (List<Product>)_productManager.GetProducts();
-            // Continue with the page logic
+
+            TotalProducts = Products.Count;
+
+            Products = Products.Skip((CurrentPage - 1) * ProductsPerPage)
+                               .Take(ProductsPerPage)
+                               .ToList();
+
             return Page();
         }
 
-        public IActionResult OnPostDeleteProduct(int productId)
+        public IActionResult OnGetDeleteProduct(int productId)
         {
             var product = _productManager.GetProductById(productId);
             if (product == null)
@@ -44,6 +57,21 @@ namespace project.Pages
             _productManager.DeleteProduct(productId);
 
             // Redirect to a success page or another appropriate location
+            return RedirectToPage();
+        }
+
+        public IActionResult OnGetPage(int page)
+        {
+            CurrentPage = page;
+
+            Products = (List<Product>)_productManager.GetProducts();
+
+            TotalProducts = Products.Count;
+
+            Products = Products.Skip((CurrentPage - 1) * ProductsPerPage)
+                               .Take(ProductsPerPage)
+                               .ToList();
+
             return Page();
         }
     }

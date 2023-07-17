@@ -3,9 +3,14 @@
 @{
     ViewData["Title"] = "Home page";
 }
-
+@{
+    int totalPages = (int)Math.Ceiling((double)Model.TotalProducts / Model.ProductsPerPage);
+}
 <div class="container">
     <h1>Product List</h1>
+    <a  class="btn btn-primary my-3" asp-page="/AddProduct">
+    Add New Product
+</a>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -36,6 +41,19 @@
             }
         </tbody>
     </table>
+    @if (totalPages > 1)
+{
+    <nav>
+        <ul class="pagination">
+            @for (int p = 1; p <= totalPages; p++)
+            {
+                <li class="page-item @(p == Model.CurrentPage ? "active" : "")">
+                    <a class="page-link" asp-page-handler="Page">@p</a>
+                </li>
+            }
+        </ul>
+    </nav>
+}
 </div>
 
     <script>
