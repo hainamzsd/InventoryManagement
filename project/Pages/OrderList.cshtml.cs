@@ -32,6 +32,18 @@ namespace project.Pages
         {
         }
 
+        public IActionResult OnGetDeleteOrder(int orderId)
+        {
+            var order = _orderManager.GetOrderById(orderId);
+            if(order == null)
+            {
+                return NotFound();
+            }
+            _orderManager.DeleteOrder(orderId);
+            TempData["Success Message"] = "Delete successfull"; 
+            return Page();
+        }
+
         public IActionResult OnGetGoToPage(int pageIndex)
         {
             CurrentPage = pageIndex;

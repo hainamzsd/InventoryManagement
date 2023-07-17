@@ -1,0 +1,87 @@
+﻿@page
+@model project.Pages.EditOrderModel
+@{
+}
+
+<h1>
+    Order Detail
+</h1>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["SuccessMessage"]
+    </div>
+}
+<div class="text-danger">
+    @Html.ValidationSummary()
+</div>
+
+<form method="post" asp-page-handler="EditOrder">
+      <input type="hidden" asp-for="order.OrderId" />
+    <div class="form-group">
+        <label asp-for="order.CustomerId">Customer</label>
+        <select asp-for="order.CustomerId" class="form-control">
+            <option value="">-- Select Customer --</option>
+            @foreach (var customer in Model.Customers)
+            {
+                <option value="@customer.CustomerId">@customer.CompanyName</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="order.EmployeeId">Employee</label>
+        <select asp-for="order.EmployeeId" class="form-control">
+            <option value="">-- Select Employee --</option>
+            @foreach (var employee in Model.Employees)
+            {
+                <option value="@employee.EmployeeId">@employee.FirstName</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="order.OrderDate">Order Date</label>
+        <input asp-for="order.OrderDate" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="order.RequiredDate">Required Date</label>
+        <input asp-for="order.RequiredDate" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="order.ShippedDate">Shipped Date</label>
+        <input asp-for="order.ShippedDate" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="order.ShipVia">Ship Via</label>
+        <input asp-for="order.ShipVia" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="order.Freight">Freight</label>
+        <input asp-for="order.Freight" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="order.ShipName">Ship Name</label>
+        <input asp-for="order.ShipName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="order.ShipAddress">Ship Address</label>
+        <input asp-for="order.ShipAddress" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="order.ShipCity">Ship City</label>
+        <input asp-for="order.ShipCity" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="order.ShipRegion">Ship Region</label>
+        <input asp-for="order.ShipRegion" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="order.ShipPostalCode">Ship Postal Code</label>
+        <input asp-for="order.ShipPostalCode" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="order.ShipCountry">Ship Country</label>
+        <input asp-for="order.ShipCountry" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Save</button>
+</form>
