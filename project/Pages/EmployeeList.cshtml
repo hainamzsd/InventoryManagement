@@ -6,7 +6,7 @@
 <div class="container">
     <h1>Employee List</h1>
     <a class="btn btn-primary my-3" asp-page="/AddEmployee">Add New Employee</a>
-
+    <a  class="btn btn-success" asp-page-handler="ExportToExcel">Export to Excel</a>
     <form method="post" >
 <div class="input-group mb-3">
   <input  name="firstName" type="text" class="form-control" placeholder="Search First Name Employee">

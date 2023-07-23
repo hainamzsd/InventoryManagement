@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using OfficeOpenXml;
 using project.Business;
 using project.Models;
 
@@ -51,6 +52,54 @@ namespace project.Pages
 
 
             return Page();
+        }
+
+        public IActionResult OnGetExportToExcel()
+        {
+            var data = Orders;
+
+            using (var package = new ExcelPackage())
+            {
+                var worksheet = package.Workbook.Worksheets.Add("Order Data");
+
+                worksheet.Cells[1, 1].Value = "Customer ID";
+                worksheet.Cells[1, 2].Value = "Employee Id";
+                worksheet.Cells[1, 3].Value = "Order Date";
+                worksheet.Cells[1, 4].Value = "Required Date";
+                worksheet.Cells[1, 5].Value = "Shipped Date";
+                worksheet.Cells[1, 6].Value = "Ship Via";
+                worksheet.Cells[1, 7].Value = "Freight";
+                worksheet.Cells[1, 8].Value = "Ship Name";
+                worksheet.Cells[1, 9].Value = "Ship Address";
+                worksheet.Cells[1, 10].Value = "Ship City";
+                worksheet.Cells[1, 11].Value = "Ship Region";
+                worksheet.Cells[1, 12].Value = "Ship Postal Code";
+                worksheet.Cells[1, 13].Value = "Ship Country";
+
+                int row = 2;
+                foreach (var order in data)
+                {
+                    worksheet.Cells[row, 1].Value = order.CustomerId;
+                    worksheet.Cells[row, 2].Value = order.EmployeeId;
+                    worksheet.Cells[row, 3].Value = order.OrderDate;
+                    worksheet.Cells[row, 4].Value = order.RequiredDate;
+                    worksheet.Cells[row, 5].Value = order.ShippedDate;
+                    worksheet.Cells[row, 6].Value = order.ShipVia;
+                    worksheet.Cells[row, 7].Value = order.Freight;
+                    worksheet.Cells[row, 8].Value = order.ShipName;
+                    worksheet.Cells[row, 9].Value = order.ShipAddress;
+                    worksheet.Cells[row, 10].Value = order.ShipCity;
+                    worksheet.Cells[row, 11].Value = order.ShipRegion;
+                    worksheet.Cells[row, 12].Value = order.ShipPostalCode;
+                    worksheet.Cells[row, 13].Value = order.ShipCountry;
+                    row++;
+                }
+
+                worksheet.Cells.AutoFitColumns();
+
+                var stream = new MemoryStream(package.GetAsByteArray());
+                return File(stream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "OrderData.xlsx");
+            }
         }
     }
 }

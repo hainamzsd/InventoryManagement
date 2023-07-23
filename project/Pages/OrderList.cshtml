@@ -4,6 +4,8 @@
 }
 <h1>Order List</h1>
 <a asp-page="/AddOrder" class="btn btn-primary">Add Order</a>
+<a  class="btn btn-success" asp-page-handler="ExportToExcel">Export to Excel</a>
+
 @if(TempData["Success Message"] != null)
 {
     <div class="text-success">@TempData["Success Message"]</div>

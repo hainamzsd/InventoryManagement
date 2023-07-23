@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using OfficeOpenXml;
 using project.Business;
 using project.Models;
 using project.Repository;
@@ -28,7 +29,7 @@ builder.Services.AddTransient<SupplierManager>();
 builder.Services.AddTransient<OrderManager>();
 builder.Services.AddTransient<CustomerManager>();
 builder.Services.AddTransient<EmployeeManager>();
-
+ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 builder.Services.AddSession(options =>
 {
     options.Cookie.Name = "DefaultCookie";
