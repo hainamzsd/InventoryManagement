@@ -37,6 +37,8 @@ namespace project.Business
 
         public void DeleteOrder(int orderId)
         {
+            var orderDetails = _northwindContext.OrderDetails.Where(x => x.OrderId == orderId).ToList();
+            _northwindContext.OrderDetails.RemoveRange(orderDetails);
             _orderRepository.Delete(orderId);
         }
 

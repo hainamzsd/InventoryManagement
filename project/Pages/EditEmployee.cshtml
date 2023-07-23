@@ -1,0 +1,100 @@
+﻿@page
+@model project.Pages.EditEmployeeModel
+@{
+}
+
+
+<h1>
+    Employee Detail
+</h1>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["SuccessMessage"]
+    </div>
+}
+<form method="post" asp-page-handler="EditEmployee">
+    <input type="hidden" asp-for="employee.EmployeeId"/>
+
+     <div class="form-group">
+        <label asp-for="employee.LastName">Last Name</label>
+        <input
+             asp-for="employee.LastName"
+             type="text" class="form-control" >
+    </div>
+    <div class="form-group">
+        <label asp-for="employee.FirstName">First Name</label>
+        <input
+             asp-for="employee.FirstName"
+             type="text" class="form-control" >
+    </div>
+    <div class="form-group">
+        <label asp-for="employee.Title">Title</label>
+        <input
+             asp-for="employee.Title"
+             type="text" class="form-control" >
+    </div>
+     <select asp-for="employee.TitleOfCourtesy" class="form-control">
+        <option value="">-- Select title of courtesy--</option>
+            <option value="Mr.">Mr.</option>
+            <option value="Mrs.">Mrs.</option>
+    </select>
+     <div class="form-group">
+        <label asp-for="employee.BirthDate">Birthdate</label>
+        <input asp-for="employee.BirthDate" class="form-control" />
+    </div>
+     <div class="form-group">
+        <label asp-for="employee.HireDate">HireDate</label>
+        <input asp-for="employee.HireDate" class="form-control" />
+    </div>
+      <div class="form-group">
+        <label asp-for="employee.Address">Address</label>
+        <input
+             asp-for="employee.Address"
+             type="text" class="form-control" >
+    </div>
+     <div class="form-group">
+        <label asp-for="employee.City">City</label>
+        <input
+             asp-for="employee.City"
+             type="text" class="form-control" >
+    </div>
+     <div class="form-group">
+        <label asp-for="employee.Region">Region</label>
+        <input
+             asp-for="employee.Region"
+             type="text" class="form-control" >
+    </div>
+     <div class="form-group">
+        <label asp-for="employee.PostalCode">PostalCode</label>
+        <input
+             asp-for="employee.PostalCode"
+             type="text" class="form-control" >
+    </div>
+     <div class="form-group">
+        <label asp-for="employee.Country">Country</label>
+        <input
+             asp-for="employee.Country"
+             type="text" class="form-control" >
+    </div>
+     <div class="form-group">
+        <label asp-for="employee.HomePhone">HomePhone</label>
+        <input
+             asp-for="employee.HomePhone"
+             type="text" class="form-control" >
+    </div>
+     <div class="form-group">
+        <label asp-for="employee.Extension">Extension</label>
+        <input
+             asp-for="employee.Extension"
+             type="text" class="form-control" >
+    </div>
+     <div class="form-group">
+        <label asp-for="employee.Notes">Notes</label>
+        <textarea 
+             asp-for="employee.Notes"
+             type="text" class="form-control"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>

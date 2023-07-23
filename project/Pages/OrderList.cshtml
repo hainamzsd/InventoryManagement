@@ -3,12 +3,13 @@
 @{
 }
 <h1>Order List</h1>
+<a asp-page="/AddOrder" class="btn btn-primary">Add Order</a>
 @if(TempData["Success Message"] != null)
 {
     <div class="text-success">@TempData["Success Message"]</div>
 }
 
-<table class="table">
+<table class="table table-striped">
     <thead>
         <tr>
             <th>Customer ID</th>

@@ -15,7 +15,6 @@ namespace project.Pages
         private CategoryManager _categoryManager;
         private SupplierManager _supplierManager;
 
-        NorthwindContext _context;
         public AddProductModel(ProductManager productManager
             , CategoryManager categoryManager, SupplierManager supplierManager)
         {

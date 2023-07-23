@@ -1,0 +1,134 @@
+﻿@page
+@model project.Pages.AddOrderModel
+@{
+}
+
+<form method="post" asp-page-handler="AddOrder">
+
+  <div class="container mt-5">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-tab="tab1" href="javascript:void(0)">Tab 1</a>
+            </li>
+            <li class="nav-item">
+                 <a class="nav-link" data-tab="tab2" href="javascript:void(0)">Tab 2</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div id="tab1" class="tab-pane fade show active">
+                <h3> Add Order </h3>
+    <div class="form-group">
+        <label asp-for="order.CustomerId">Customer</label>
+        <select asp-for="order.CustomerId" class="form-control">
+            <option value="">-- Select Customer --</option>
+            @foreach (var customer in Model.Customers)
+            {
+                <option value="@customer.CustomerId">@customer.CompanyName</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="order.EmployeeId">Employee</label>
+        <select asp-for="order.EmployeeId" class="form-control">
+            <option value="">-- Select Employee --</option>
+            @foreach (var employee in Model.Employees)
+            {
+                <option value="@employee.EmployeeId">@employee.FirstName</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label asp-for="order.OrderDate">Order Date</label>
+        <input asp-for="order.OrderDate" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="order.RequiredDate">Required Date</label>
+        <input asp-for="order.RequiredDate" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="order.ShippedDate">Shipped Date</label>
+        <input asp-for="order.ShippedDate" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="order.ShipVia">Ship Via</label>
+        <input asp-for="order.ShipVia" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="order.Freight">Freight</label>
+        <input asp-for="order.Freight" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="order.ShipName">Ship Name</label>
+        <input asp-for="order.ShipName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="order.ShipAddress">Ship Address</label>
+        <input asp-for="order.ShipAddress" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="order.ShipCity">Ship City</label>
+        <input asp-for="order.ShipCity" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="order.ShipRegion">Ship Region</label>
+        <input asp-for="order.ShipRegion" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="order.ShipPostalCode">Ship Postal Code</label>
+        <input asp-for="order.ShipPostalCode" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="order.ShipCountry">Ship Country</label>
+        <input asp-for="order.ShipCountry" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Save</button>
+
+            </div>
+            <div id="tab2" class="tab-pane fade">
+                <h3>Order Details</h3>
+                <div>
+                    <button >Add product</button>
+                     <div class="form-group">
+        <label asp-for="order.EmployeeId">Employee</label>
+        <select asp-for="order.EmployeeId" class="form-control">
+            <option value="">-- Select Employee --</option>
+            @foreach (var employee in Model.Employees)
+            {
+                <option value="@employee.EmployeeId">@employee.FirstName</option>
+            }
+        </select>
+    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</form>
+<script>
+    // Vanilla JavaScript for tab switching
+    document.addEventListener("DOMContentLoaded", function () {
+        var tabLinks = document.querySelectorAll(".nav-link");
+
+        tabLinks.forEach(function (tabLink) {
+            tabLink.addEventListener("click", function (event) {
+                event.preventDefault();
+                var tabId = this.getAttribute("data-tab");
+                var tabContent = document.getElementById(tabId);
+
+                document.querySelectorAll(".tab-pane").forEach(function (content) {
+                    content.classList.remove("show", "active");
+                });
+
+                tabContent.classList.add("show", "active");
+            });
+        });
+    });
+</script>
+
+
+
+
+
+
+

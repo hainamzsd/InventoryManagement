@@ -1,0 +1,69 @@
+﻿@page "/EmployeeList"
+@model project.Pages.EmloyeeModel
+@{
+}
+
+<div class="container">
+    <h1>Employee List</h1>
+    <a class="btn btn-primary my-3" asp-page="/AddEmployee">Add New Employee</a>
+    
+@if (TempData["Success Message"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["Success Message"]
+    </div>
+}
+@if (TempData["Fail Message"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["Fail Message"]
+    </div>
+}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td>LastName</td>
+                <td>FirstName</td>
+                <td>Title</td>
+                <td>TitleOfCourtesy</td>
+                <td>BirthDate</td>
+                <td>HireDate</td>
+                <td>Address</td>
+                <td>City</td>
+                <td>Region</td>
+                <td>PostalCode</td>
+                <td>HomePhone</td>
+                <td>Extension</td>
+                <td>Notes</td>
+                <td>Actions</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var employee in Model.Employees)
+            {
+                <tr>
+                    <td>@employee.LastName</td>
+                    <td>@employee.FirstName</td>
+                    <td>@employee.Title</td>
+                    <td>@employee.TitleOfCourtesy</td>
+                    <td>@employee.BirthDate</td>
+                    <td>@employee.HireDate</td>
+                    <td>@employee.Address</td>
+                    <td>@employee.City</td>
+                    <td>@employee.Region</td>
+                    <td>@employee.PostalCode</td>
+                    <td>@employee.HomePhone</td>
+                    <td>@employee.Extension</td>
+                    <td>@employee.Notes</td>
+                    <td>
+                        <div>
+                            <a class="btn btn-primary" asp-route-employeeId="@employee.EmployeeId" asp-page="/EditEmployee">Edit</a>
+                            <a class="btn btn-danger" asp-page-handler="DeleteEmployee" asp-route-employeeId="@employee.EmployeeId">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
