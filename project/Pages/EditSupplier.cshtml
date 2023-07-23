@@ -1,0 +1,81 @@
+﻿@page
+@model project.Pages.EditSupplierModel
+@{
+}
+
+
+<h1>
+    Supplier Detail
+</h1>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+<form method="post" asp-page-handler="EditSupplier">
+    <input type="hidden" asp-for="supplier.SupplierId"/>
+     <div class="form-group">
+        <label asp-for="supplier.CompanyName">Company Name</label>
+        <input
+             asp-for="supplier.CompanyName"
+             type="text" class="form-control" >
+    </div>
+    <div class="form-group">
+        <label asp-for="supplier.ContactName">Contact Name</label>
+        <input
+             asp-for="supplier.ContactName"
+             type="text" class="form-control" >
+    </div>
+    <div class="form-group">
+        <label asp-for="supplier.ContactTitle">Contact Title</label>
+        <input
+             asp-for="supplier.ContactTitle"
+             type="text" class="form-control" >
+    </div>
+    <div class="form-group">
+        <label asp-for="supplier.Address">Address</label>
+        <input
+             asp-for="supplier.Address"
+             type="text" class="form-control" >
+    </div>
+    <div class="form-group">
+        <label asp-for="supplier.City">City</label>
+        <input
+             asp-for="supplier.City"
+             type="text" class="form-control" >
+    </div>
+    <div class="form-group">
+        <label asp-for="supplier.Region">Region</label>
+        <input
+             asp-for="supplier.Region"
+             type="text" class="form-control" >
+    </div>
+    <div class="form-group">
+        <label asp-for="supplier.PostalCode">PostalCode</label>
+        <input
+             asp-for="supplier.PostalCode"
+             type="text" class="form-control" >
+    </div>
+    <div class="form-group">
+        <label asp-for="supplier.Country">Country</label>
+        <input
+             asp-for="supplier.Country"
+             type="text" class="form-control" >
+    </div>
+    <div class="form-group">
+        <label asp-for="supplier.Phone">Phone</label>
+        <input
+             asp-for="supplier.Phone"
+             type="text" class="form-control" >
+    </div>
+    <div class="form-group">
+        <label asp-for="supplier.Fax">Fax</label>
+        <input
+             asp-for="supplier.Fax"
+             type="text" class="form-control" >
+    </div>
+     <button type="submit" class="btn btn-primary">Save</button>
+</form>

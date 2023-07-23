@@ -7,6 +7,7 @@ namespace project.Pages
 {
     public class AddOrderModel : PageModel
     {
+        [BindProperty]
         public Order order { get; set; }
         private OrderManager _orderManager;
 
@@ -38,50 +39,33 @@ namespace project.Pages
 
         public IActionResult OnPostAddOrder()
         {
-            string customerId = Request.Form["order.CustomerId"];
-            string employeeId = Request.Form["order.EmployeeId"];
-            string orderDate = Request.Form["order.OrderDate"];
-            string requireDate = Request.Form["order.RequiredDate"];
-            string shipDate = Request.Form["order.ShippedDate"];
-            string shipVia = Request.Form["order.ShipVia"];
-            string freight = Request.Form["order.Freight"];
-            string shipName = Request.Form["order.ShipName"];
-            string shipAddress = Request.Form["order.ShipAddress"];
-            string shipCity = Request.Form["order.ShipCity"];
-            string shipRegion = Request.Form["order.ShipRegion"];
-            string shipPostalCode = Request.Form["order.ShipPostalCode"];
-            string shipCountry = Request.Form["order.ShipCountry"];
-
-            if (string.IsNullOrEmpty(customerId) || string.IsNullOrEmpty(employeeId) ||
-    string.IsNullOrEmpty(orderDate) || string.IsNullOrEmpty(requireDate) ||
-    string.IsNullOrEmpty(shipDate) || string.IsNullOrEmpty(shipVia) ||
-    string.IsNullOrEmpty(freight) || string.IsNullOrEmpty(shipName) ||
-    string.IsNullOrEmpty(shipAddress) || string.IsNullOrEmpty(shipCity) ||
-    string.IsNullOrEmpty(shipRegion) || string.IsNullOrEmpty(shipPostalCode) ||
-    string.IsNullOrEmpty(shipCountry))
+            var orderAdd = new Order()
             {
-                ModelState.AddModelError("", "Please provide all the required fields.");
-                return Page();
-            }
-
-            var orderToAdd = new Order()
-            {
-                CustomerId = customerId,
-                EmployeeId = int.Parse(employeeId),
-                OrderDate = DateTime.Parse(orderDate),
-                RequiredDate = DateTime.Parse(requireDate),
-                ShippedDate = DateTime.Parse(shipDate),
-                ShipVia = int.Parse(shipVia),
-                Freight = decimal.Parse(freight),
-                ShipName = shipName,
-                ShipAddress = shipAddress,
-                ShipCity = shipCity,
-                ShipRegion = shipRegion,
-                ShipPostalCode = shipPostalCode,
-                ShipCountry = shipCountry
+                CustomerId = order.CustomerId,
+                EmployeeId = order.EmployeeId,
+                OrderDate = order.OrderDate,
+                RequiredDate = order.RequiredDate,
+                ShippedDate = order.ShippedDate,
+                ShipVia = order.ShipVia,
+                Freight = order.Freight,
+                ShipName = order.ShipName,
+                ShipAddress = order.ShipAddress,
+                ShipCity = order.ShipCity,
+                ShipRegion = order.ShipRegion,
+                ShipPostalCode = order.ShipPostalCode,
+                ShipCountry = order.ShipCountry,
             };
 
-
+            try
+            {
+                _orderManager.AddOrder(orderAdd);
+                TempData["SuccessMessage"] = "Order added successfully.";
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                TempData["Fail"] = "Order added fail.";
+            }
             return Page();
         }
     }

@@ -48,6 +48,7 @@ namespace project.Pages
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
+                TempData["Fail"] = "Employee added fail.";
             }
             return Page();
         }

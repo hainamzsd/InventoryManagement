@@ -1,4 +1,5 @@
-﻿using project.Models;
+﻿using Microsoft.IdentityModel.Tokens;
+using project.Models;
 using project.Repository;
 
 namespace project.Business
@@ -33,6 +34,14 @@ namespace project.Business
         public void UpdateProduct(Product product)
         {
             _productRepository.Update(product);
+        }
+
+        public List<Product> GetProductsByName(string name) {
+            if (!name.IsNullOrEmpty())
+            {
+                return _context.Products.Where(x => x.ProductName.Contains(name)).ToList();
+            }
+            return null;
         }
 
         public void DeleteProduct(int productId)

@@ -11,6 +11,12 @@ namespace project.Pages
 
         private EmployeeManager _employeeManager;
 
+        public List<Employee> searchList { get; set; }
+        public int PageSize { get; set; } = 3;
+        public int CurrentPage { get; set; } = 1;
+        public int TotalPages => (int)Math.Ceiling(Employees.Count / (double)PageSize);
+        public List<Employee> DisplayEmployees => Employees.Skip((CurrentPage - 1) * PageSize).Take(PageSize).ToList();
+
         public EmloyeeModel(EmployeeManager employeeManager)
         {
             _employeeManager = employeeManager;
@@ -38,5 +44,21 @@ namespace project.Pages
       
             return Page();
         }
+
+        public IActionResult OnGetGoToPage(int pageIndex)
+        {
+            CurrentPage = pageIndex;
+
+
+
+            return Page();
+        }
+
+        public IActionResult OnPostSearch(string firstName)
+        {
+            searchList = _employeeManager.GetEmployeesByName(firstName);
+            return Page();
+        }
+
     }
 }

@@ -6,6 +6,15 @@
 <div class="container">
     <h1>Employee List</h1>
     <a class="btn btn-primary my-3" asp-page="/AddEmployee">Add New Employee</a>
+
+    <form method="post" >
+<div class="input-group mb-3">
+  <input  name="firstName" type="text" class="form-control" placeholder="Search First Name Employee">
+<div class="input-group-prepend">
+    <button class="btn btn-primary" type="submit" asp-page-handler="Search">Search</button>
+  </div>
+</div>
+</form>
     
 @if (TempData["Success Message"] != null)
 {
@@ -39,7 +48,37 @@
             </tr>
         </thead>
         <tbody>
-            @foreach(var employee in Model.Employees)
+            @{
+                if(Model.searchList is null)
+                {
+                     @foreach(var employee in Model.DisplayEmployees)
+            {
+                <tr>
+                    <td>@employee.LastName</td>
+                    <td>@employee.FirstName</td>
+                    <td>@employee.Title</td>
+                    <td>@employee.TitleOfCourtesy</td>
+                    <td>@employee.BirthDate</td>
+                    <td>@employee.HireDate</td>
+                    <td>@employee.Address</td>
+                    <td>@employee.City</td>
+                    <td>@employee.Region</td>
+                    <td>@employee.PostalCode</td>
+                    <td>@employee.HomePhone</td>
+                    <td>@employee.Extension</td>
+                    <td>@employee.Notes</td>
+                    <td>
+                        <div>
+                            <a class="btn btn-primary" asp-route-employeeId="@employee.EmployeeId" asp-page="/EditEmployee">Edit</a>
+                            <a class="btn btn-danger" asp-page-handler="DeleteEmployee" asp-route-employeeId="@employee.EmployeeId">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+                    }
+                }
+                else
+                {
+                     @foreach(var employee in Model.searchList)
             {
                 <tr>
                     <td>@employee.LastName</td>
@@ -63,7 +102,41 @@
                     </td>
                 </tr>
             }
+                }
+            }
+           
         </tbody>
     </table>
+     @if (Model.TotalPages > 1  && Model.searchList == null) 
+{
+    <nav>
+        <ul class="pagination">
+            @if (Model.CurrentPage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-page-handler="GoToPage" asp-route-pageIndex="1">First</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" asp-page-handler="GoToPage" asp-route-pageIndex="@(Model.CurrentPage - 1)">Previous</a>
+                </li>
+            }
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                <li class="page-item @(Model.CurrentPage == i ? "active" : "")">
+                    <a class="page-link" asp-page-handler="GoToPage" asp-route-pageIndex="@i">@i</a>
+                </li>
+            }
+            @if (Model.CurrentPage < Model.TotalPages)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-page-handler="GoToPage" asp-route-pageIndex="@(Model.CurrentPage + 1)">Next</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" asp-page-handler="GoToPage" asp-route-pageIndex="@Model.TotalPages">Last</a>
+                </li>
+            }
+        </ul>
+    </nav>
+}
 
 </div>

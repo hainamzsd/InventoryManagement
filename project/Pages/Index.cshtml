@@ -8,6 +8,29 @@
     <a  class="btn btn-primary my-3" asp-page="/AddProduct">
     Add New Product
 </a>
+
+
+<form method="post" >
+<div class="input-group mb-3">
+  <input  name="productName" type="text" class="form-control" placeholder="Search Name Product">
+<div class="input-group-prepend">
+    <button class="btn btn-primary" type="submit" asp-page-handler="Search">Search</button>
+  </div>
+</div>
+</form>
+
+@if (TempData["Success Message"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["Success Message"]
+    </div>
+}
+@if (TempData["Fail Message"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["Fail Message"]
+    </div>
+}
     <table class="table table-striped">
         <thead>
             <tr>
@@ -20,7 +43,11 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var product in Model.DisplayProducts)
+ @{
+           
+                if(Model.searchList is null)
+                {
+                     @foreach (var product in Model.DisplayProducts)
             {
                 <tr>
                     <td>@product.ProductId</td>
@@ -35,10 +62,33 @@
                 </div>
             </td>
                 </tr>
+                    }
+                }
+                else
+                {
+                     @foreach (var product in Model.searchList)
+            {
+                <tr>
+                    <td>@product.ProductId</td>
+                    <td>@product.ProductName</td>
+                    <td>@product.UnitsInStock</td>
+                    <td>@product.UnitsOnOrder</td>
+                    <td>@product.UnitPrice</td>
+                    <td>
+                        <div>
+                  <a asp-page="/EditProduct" asp-route-productId="@product.ProductId" class="btn btn-primary">Edit</a>
+                 <a asp-page-handler="DeleteProduct" asp-route-productId="@product.ProductId" class="btn btn-danger">Delete</a>
+                </div>
+            </td>
+                </tr>
+                    }
+                }
             }
+           
         </tbody>
     </table>
-   @if (Model.TotalPages > 1)
+
+   @if (Model.TotalPages > 1 && Model.searchList == null)
 {
     <nav>
         <ul class="pagination">

@@ -15,6 +15,8 @@ namespace project.Pages
 
         private ProductManager _productManager;
 
+        public List<Product> searchList { get; set; }
+
         public int PageSize { get; set; } = 10;
         public int CurrentPage { get; set; } = 1;
         public int TotalPages => (int)Math.Ceiling(Products.Count / (double)PageSize);
@@ -47,8 +49,15 @@ namespace project.Pages
             {
                 return NotFound();
             }
-
-            _productManager.DeleteProduct(productId);
+            try
+            {
+                _productManager.DeleteProduct(productId);
+                TempData["Success Message"] = "Delete successfull";
+            }
+            catch (Exception ex)
+            {
+                TempData["Fail Message"] = "Delete Fail due to " + ex.Message;
+            }
 
             // Redirect to a success page or another appropriate location
             return RedirectToPage();
@@ -62,5 +71,12 @@ namespace project.Pages
 
             return Page();
         }
+
+        public IActionResult OnPostSearch(string productName)
+        {
+            searchList = _productManager.GetProductsByName(productName);
+            return Page();
+        }
+
     }
 }
